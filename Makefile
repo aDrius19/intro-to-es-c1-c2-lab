@@ -1,10 +1,10 @@
 #
-# example Makefile to build an executable, just change the name of the PROG constant
+# example Makefile to build an executable, just change the name of the PROG constant to the other .c files
 #
-PROG=day1_part2
+PROG=day6_part1
 
-all: $(PROG).c
+buildandrun: 
 	gcc -std=c11 -Wall $(PROG).c -o $(PROG)
-
+	./$(PROG).exe
 clean:
-	$(RM) $(PROG)
+	$(RM) $(PROG).exe
