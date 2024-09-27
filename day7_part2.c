@@ -16,11 +16,11 @@ typedef struct
 int cardValue(char card)
 {
     if (card >= '2' && card <= '9')
-        return card - '2';
+        return card - '1';
     if (card == 'T')
-        return 8; // 10
+        return 9; // 10
     if (card == 'J')
-        return 9; // Jack
+        return 0; // Jack - wildcard
     if (card == 'Q')
         return 10; // Queen
     if (card == 'K')
@@ -44,7 +44,7 @@ int handType(char *hand)
     int pair = 0;
     int fourOfAKind = 0;
     int fiveOfAKind = 0;
-    for (int i = 0; i < 13; i++)
+    for (int i = 1; i < 13; i++)
     {
         if (count[i] == 5)
             fiveOfAKind++;
@@ -57,27 +57,28 @@ int handType(char *hand)
     }
 
     if (fiveOfAKind 
-    || (fourOfAKind && jokerCounter == 1)
+    || (fourOfAKind && jokerCounter)
     || (threeOfAKind && jokerCounter == 2)
     || (pair && jokerCounter == 3)
-    || (jokerCounter == 4))
+    || (jokerCounter == 4)
+    || (jokerCounter == 5))
         return 7; // Five of a kind
     if (fourOfAKind 
-    || (threeOfAKind && jokerCounter == 1)
+    || (threeOfAKind && jokerCounter)
     || (pair && jokerCounter == 2)
     || (jokerCounter == 3))
         return 6; // Four of a kind
-    if ((threeOfAKind && pair == 1) 
-    || (pair == 2 && jokerCounter == 1))
+    if ((threeOfAKind && pair) 
+    || (pair == 2 && jokerCounter))
         return 5; // Full house
-    if (threeOfAKind 
-    || (pair == 1 && jokerCounter == 1)
+    if (threeOfAKind
+    || (pair && jokerCounter)
     || (jokerCounter == 2))
         return 4; // Three of a kind
     if (pair == 2)
         return 3; // Two pair
-    if (pair == 1 
-    || (pair == 0 && jokerCounter == 1))
+    if (pair
+    || (pair == 0 && jokerCounter))
         return 2; // One pair
     return 1;     // High card
 }
